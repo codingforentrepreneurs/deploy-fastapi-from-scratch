@@ -1,1 +1,6 @@
 delete-me.txt
+
+bin/
+lib/
+include/
+pyvenv.cfg
