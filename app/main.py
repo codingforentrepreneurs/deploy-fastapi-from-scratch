@@ -1,19 +1,18 @@
 import pathlib
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 
-BASE_DIR = pathlib.Path(__file__).parent
+BASE_DIR = pathlib.Path(__file__).resolve().parent
 ROOT_PROJECT_DIR = BASE_DIR.parent
 TEMPLATE_DIR = ROOT_PROJECT_DIR / "html" # /var/www/html/
-
 app = FastAPI()
 
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
 @app.get("/", response_class=HTMLResponse) # html -> localhost:8000/
-def read_index():
-    return templates.TemplateResponse("index.nginx-debian.html", {})
+def read_index(request:Request):
+    return templates.TemplateResponse("index.nginx-debian.html", {"request": request, "title": "Hello World from Jinja"})
 
 @app.get("/abc") # html -> localhost:8000/abc
 def read_abc():
