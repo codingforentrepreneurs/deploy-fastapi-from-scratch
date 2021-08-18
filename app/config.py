@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 
 from pydantic import BaseSettings
@@ -5,7 +6,7 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     app_name: str = "Fastapi APP"
-    APP_DB: str = None
+    app_db: str = os.environ.get("APP_DB")
 
     class Config:
         env_file = ".env"
