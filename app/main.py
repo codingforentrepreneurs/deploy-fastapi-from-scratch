@@ -1,5 +1,3 @@
-import os
-
 import pathlib
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -23,4 +21,4 @@ def read_index(request:Request):
 
 @app.get("/abc") # html -> localhost:8000/abc
 def read_abc():
-    return {"hello": "world", "db": settings.app_db is not None, "dbos": os.environ.get("APP_DB") is not None }
+    return {"hello": "world", "db": settings.APP_DB is not None}
