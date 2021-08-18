@@ -5,7 +5,7 @@ from pydantic import BaseSettings
 
 class Settings(BaseSettings):
     app_name: str = "Fastapi APP"
-    APP_DB: str = None
+    app_db: str = None
 
     class Config:
         env_file = ".env"
