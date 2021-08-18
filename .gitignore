@@ -1,3 +1,5 @@
+app/.env
+.env
 delete-me.txt
 
 bin/
