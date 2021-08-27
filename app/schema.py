@@ -6,6 +6,9 @@ class EntryCreateSchema(BaseModelSchema):
     title: str
     content: Optional[str] = None
 
+    class Config:
+        orm_mode = True
+
     @validator("title")
     def title_length(cls, value, **kwargs):
         if len(value) > 100:
