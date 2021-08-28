@@ -17,7 +17,6 @@ TEMPLATE_DIR = ROOT_PROJECT_DIR / "html" # /var/www/html/
 app = FastAPI()
 settings = get_settings()
 
-
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
 
