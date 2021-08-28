@@ -40,5 +40,4 @@ def entry_list_view(db:Session = Depends(get_db)):
 
 @app.post("/entries/", response_model=EntryCreateSchema, status_code=201)
 def entry_create_view(data: EntryCreateSchema, db:Session = Depends(get_db)):
-    # data = {"id": 1, "title": "Hello world", "content": "abc"}
     return create_entry(db, data)
