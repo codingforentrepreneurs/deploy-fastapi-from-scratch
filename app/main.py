@@ -19,14 +19,17 @@ settings = get_settings()
 
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
+
 @app.on_event("startup")
 def on_startup():
     print("Starting..")
     create_db_and_tables()
 
+
 @app.get("/", response_class=HTMLResponse) # html -> localhost:8000/
 def read_index(request:Request):
     return templates.TemplateResponse("index.nginx-debian.html", {"request": request, "title": "Hello World from Jinja", "hostname": get_ip() })
+
 
 @app.get("/abc") # html -> localhost:8000/abc
 def read_abc():
