@@ -5,7 +5,6 @@ from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from typing import List
 
-
 from config import get_settings
 from crud import get_entries, create_entry
 from db import create_db_and_tables, get_db
