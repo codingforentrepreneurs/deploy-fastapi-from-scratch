@@ -1,10 +1,13 @@
 import pathlib
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from sqlalchemy.orm import Session
 from typing import List
 
 from config import get_settings
+from crud import get_entries, create_entry
+from db import create_db_and_tables, get_db
 from ip import get_ip
 from schema import EntryCreateSchema, EntryListSchema
 
@@ -16,6 +19,10 @@ settings = get_settings()
 
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 
+@app.on_event("startup")
+def on_startup():
+    print("Starting..")
+    create_db_and_tables()
 
 @app.get("/", response_class=HTMLResponse) # html -> localhost:8000/
 def read_index(request:Request):
@@ -27,15 +34,11 @@ def read_abc():
 
 
 @app.get("/entries/", response_model=List[EntryListSchema]) # html -> localhost:8000/abc
-def entry_list_view():
-    items = [
-        {"id": 1, "title": "Hello world", "content": "again"},
-        {"id": 2, "title": "Hello worlder", "content": "abc"},
-    ]
-    return items
+def entry_list_view(db:Session = Depends(get_db)):
+    return get_entries(db)
 
 
-@app.post("/entries/", response_model=EntryCreateSchema)
-def entry_create_view(data: EntryCreateSchema):
+@app.post("/entries/", response_model=EntryCreateSchema, status_code=201)
+def entry_create_view(data: EntryCreateSchema, db:Session = Depends(get_db)):
     # data = {"id": 1, "title": "Hello world", "content": "abc"}
-    return data
+    return create_entry(db, data)
